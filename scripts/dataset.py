@@ -56,7 +56,6 @@ def prepare_data_split(split: str, output_dir: Path) -> None:
     ds = (
         load_dataset("BioLaySumm/BioLaySumm2025-PLOS", split=split)
         .shuffle(seed=SEED)
-        .select(range(10))
     )
     ds_with_abstracts = ds.map(extract_abstracts, batched=True)
     ds_with_abstracts.to_parquet(output_dir / f"{filename}.parquet")
