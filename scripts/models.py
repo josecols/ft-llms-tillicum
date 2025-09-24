@@ -90,10 +90,11 @@ class LlamaSummarizer:
         self._model = AutoModelForCausalLM.from_pretrained(
             self._model_id,
             dtype=self._dtype,
+            device_map="auto",
         )
 
         self._model.generation_config.max_new_tokens = self.max_new_tokens
-        self._model.to(self._get_device())
+        # self._model.to(self._get_device())
 
     def _read_checkpoint(self):
         if os.path.exists(self.output_path):
