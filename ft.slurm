@@ -3,9 +3,9 @@
 #SBATCH --qos=normal
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:2
-#SBATCH --gpus-per-task=2
-#SBATCH --cpus-per-task=8
+#SBATCH --gres=gpu:8
+#SBATCH --gpus-per-task=8
+#SBATCH --cpus-per-task=32
 #SBATCH --mem=128G
 #SBATCH --time=08:00:00
 #SBATCH --output=slurm-%j.out
@@ -27,9 +27,9 @@ CONFIG_PATH="$SHARED_FS/configs/llama3_2_1B_cuda.yaml"
 srun --ntasks-per-node=1 \
   tune run \
   --nnodes $SLURM_NNODES \
-  --nproc_per_node 2 \
+  --nproc_per_node 8 \
   --rdzv_id $SLURM_JOB_ID \
   --rdzv_backend c10d \
   --rdzv_endpoint "$head_ip:29500" \
   lora_finetune_distributed \
-  --config $CONFIG_PATH
+  --config "$CONFIG_PATH"
