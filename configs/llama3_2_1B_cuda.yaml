@@ -58,7 +58,7 @@ dataset:
   packed: False  # True increases speed
 seed: null
 shuffle: True
-batch_size: 4
+batch_size: 8
 
 # Optimizer and Scheduler
 optimizer:
