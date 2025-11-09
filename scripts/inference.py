@@ -1,6 +1,6 @@
 import argparse
 
-from models import LlamaSummarizerTuned, LlamaSummarizer
+from models import LlamaSummarizerTuned
 
 
 def main(**kwargs):
@@ -13,7 +13,7 @@ def main(**kwargs):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Run inference on a fine-tuned Llama 3.1 8B Instruct model."
+        description="Run inference on a fine-tuned Llama 3.2 3B Instruct model."
     )
 
     parser.add_argument(
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--input-field",
         type=str,
-        default="abstract",
+        default="text",
         help="Field name in the dataset to use as input for inference",
     )
     parser.add_argument(
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--max-new-tokens",
         type=int,
-        default=384,
+        default=256,
     )
     args = parser.parse_args()
     main(**vars(parser.parse_args()))

@@ -28,7 +28,7 @@ class LlamaSummarizer:
         output_path: str,
         batch_size: int = 1,
         input_field: str = "article",
-        max_new_tokens: int = 384,
+        max_new_tokens: int = 256,
         decoding: str = "greedy",
         base_model: str = "meta-llama/Llama-3.2-3B-Instruct",
     ):
