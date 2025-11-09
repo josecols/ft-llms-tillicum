@@ -59,16 +59,6 @@ class LlamaSummarizer:
     def _load_dataset(cls, dataset_path: str) -> Dataset:
         return Dataset.from_pandas(pd.read_parquet(dataset_path))
 
-    @classmethod
-    def _get_device(cls):
-        if torch.cuda.is_available():
-            return torch.device("cuda")
-
-        if torch.backends.mps.is_available():
-            return torch.device("mps")
-
-        return torch.device("cpu")
-
     def _get_decoding_config(self) -> dict:
         decoding_config = {
             "dola": {
@@ -83,9 +73,7 @@ class LlamaSummarizer:
         return decoding_config.get(self._decoding, {})
 
     def _load_model(self):
-        self._tokenizer = AutoTokenizer.from_pretrained(
-            self._model_id, use_fast=True
-        )
+        self._tokenizer = AutoTokenizer.from_pretrained(self._model_id, use_fast=True)
         self._tokenizer.pad_token = self._tokenizer.eos_token
         self._model = AutoModelForCausalLM.from_pretrained(
             self._model_id,
@@ -94,7 +82,6 @@ class LlamaSummarizer:
         )
 
         self._model.generation_config.max_new_tokens = self.max_new_tokens
-        # self._model.to(self._get_device())
 
     def _read_checkpoint(self):
         if os.path.exists(self.output_path):

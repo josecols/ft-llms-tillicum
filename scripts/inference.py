@@ -8,7 +8,6 @@ def main(**kwargs):
     adapter_path = config.pop("adapter_path")
 
     summarizer = LlamaSummarizerTuned(adapter_path, **config)
-    # summarizer = LlamaSummarizer(**config)
     summarizer.generate()
 
 

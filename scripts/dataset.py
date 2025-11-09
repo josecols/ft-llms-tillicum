@@ -1,3 +1,4 @@
+import argparse
 import json
 from pathlib import Path
 
@@ -8,18 +9,22 @@ SPLITS = ("train", "validation", "test")
 BASE_PATH = Path(__file__).resolve().parent
 
 
-def extract_abstracts(samples: dict) -> dict:
+def extract_text(samples: dict, use_abstracts: bool = False) -> dict:
     """
-    Extracts the abstracts from the given article samples.
+    Extracts the text from the given article samples.
 
     Args:
         samples: The batch of article samples.
+        use_abstracts: If True, extract only abstracts; if False, use the entire article text.
 
-    Returns: A new column with the extracted abstracts.
+    Returns: A new column with the extracted text.
     """
-    abstracts = [article.split("\n")[0].strip() for article in samples["article"]]
+    if use_abstracts:
+        texts = [article.split("\n")[0].strip() for article in samples["article"]]
+    else:
+        texts = samples["article"]
 
-    return {"abstract": abstracts}
+    return {"text": texts}
 
 
 def format_model_messages(text: str, summary: str | None = None) -> dict:
@@ -51,31 +56,50 @@ def format_model_messages(text: str, summary: str | None = None) -> dict:
     }
 
 
-def prepare_data_split(split: str, output_dir: Path) -> None:
+def prepare_data_split(
+    split: str, output_dir: Path, use_abstracts: bool = False
+) -> None:
     filename = f"plos_{split}"
-    ds = (
-        load_dataset("BioLaySumm/BioLaySumm2025-PLOS", split=split)
-        .shuffle(seed=SEED)
+    ds = load_dataset("BioLaySumm/BioLaySumm2025-PLOS", split=split).shuffle(seed=SEED)
+    ds_with_text = ds.map(
+        lambda samples: extract_text(samples, use_abstracts=use_abstracts), batched=True
     )
-    ds_with_abstracts = ds.map(extract_abstracts, batched=True)
-    ds_with_abstracts.to_parquet(output_dir / f"{filename}.parquet")
+    ds_with_text.to_parquet(output_dir / f"{filename}.parquet")
 
     output_path = output_dir / f"{filename}.jsonl"
     with output_path.open("w", encoding="utf-8") as f:
-        for record in ds_with_abstracts:
+        for record in ds_with_text:
             json_line = format_model_messages(
-                record.get("abstract", ""), record.get("summary", "")
+                record.get("text", ""), record.get("summary", "")
             )
             f.write(json.dumps(json_line, ensure_ascii=False) + "\n")
 
-    print(f"Wrote {len(ds_with_abstracts)} records to {output_path}")
+    print(f"Wrote {len(ds_with_text)} records to {output_path}")
 
 
-def prepare_data():
+def prepare_data(use_abstracts: bool = False):
     output_dir = (BASE_PATH / ".." / "data").resolve()
     for split in SPLITS:
-        prepare_data_split(split, output_dir)
+        prepare_data_split(split, output_dir, use_abstracts=use_abstracts)
+
+
+def _parse_args():
+    parser = argparse.ArgumentParser(
+        description="Prepare BioLaySumm dataset for training."
+    )
+    parser.add_argument(
+        "--use-abstracts",
+        action="store_true",
+        default=False,
+        help="Extract only abstracts from articles.",
+    )
+    return parser.parse_args()
+
+
+def main():
+    args = _parse_args()
+    prepare_data(use_abstracts=args.use_abstracts)
 
 
 if __name__ == "__main__":
-    prepare_data()
+    main()
