@@ -95,6 +95,7 @@ class LlamaSummarizer:
         return len(self._summaries)
 
     def _write_checkpoint(self, batch_number: int):
+        os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
         pd.DataFrame({"summary": self._summaries}).to_csv(self.output_path)
         print(f"Checkpoint saved at batch {batch_number}.")
 
