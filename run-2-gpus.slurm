@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=ftllm
 #SBATCH --qos=normal
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:8
-#SBATCH --gpus-per-task=8
+#SBATCH --gres=gpu:2
+#SBATCH --gpus-per-task=2
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=128G
 #SBATCH --time=08:00:00
@@ -22,12 +22,11 @@ export NCCL_DEBUG=INFO
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 
 SHARED_FS=/gpfs/scrubbed/jcols/projects/ft-llms
-CONFIG_PATH="$SHARED_FS/configs/llama3_2_1B_cuda.yaml"
+CONFIG_PATH="$SHARED_FS/configs/llama3_2_3B_cuda.yaml"
 
-srun --ntasks-per-node=1 \
-  tune run \
+srun tune run \
   --nnodes $SLURM_NNODES \
-  --nproc_per_node 8 \
+  --nproc_per_node $SLURM_GPUS_PER_TASK \
   --rdzv_id $SLURM_JOB_ID \
   --rdzv_backend c10d \
   --rdzv_endpoint "$head_ip:29500" \
