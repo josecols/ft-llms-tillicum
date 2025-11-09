@@ -30,7 +30,7 @@ class LlamaSummarizer:
         input_field: str = "article",
         max_new_tokens: int = 384,
         decoding: str = "greedy",
-        base_model: str = "meta-llama/Llama-3.2-1B-Instruct",
+        base_model: str = "meta-llama/Llama-3.2-3B-Instruct",
     ):
         self._summaries = []
         self._dtype = torch.bfloat16
