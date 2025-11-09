@@ -24,8 +24,7 @@ export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 SHARED_FS=/gpfs/scrubbed/jcols/projects/ft-llms
 CONFIG_PATH="$SHARED_FS/configs/llama3_2_3B_cuda.yaml"
 
-srun --ntasks-per-node=1 \
-  tune run \
+srun tune run \
   --nnodes $SLURM_NNODES \
   --nproc_per_node 8 \
   --rdzv_id $SLURM_JOB_ID \

@@ -22,6 +22,5 @@ srun python scripts/inference.py \
   --adapter-path "$ADAPTER_PATH" \
   --output-path "$OUTPUT_PATH" \
   --dataset-path "$DATASET_PATH" \
-  --input-field abstract \
   --batch-size 8 \
   --max-new-tokens 256
