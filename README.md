@@ -68,26 +68,26 @@ This project uses [TorchTune](https://pytorch.org/torchtune/) to demonstrate how
    pip install torchtune
    ```
 
-8. Install WanDB to track fine-tuning jobs:
+8. Install [WanDB](https://wandb.ai/site/) to track fine-tuning jobs:
    ```sh
    pip install wandb
    ```
    > **Note:** You will need to [authenticate](https://docs.wandb.ai/models/quickstart#install-the-wandb-library-and-log-in) your WanDB account for the first time.
 
-9. Install HuggingFace libraries to run inference tasks:
+9. Install HuggingFace libraries to run **inference tasks**:
    ```sh
    pip install transformers peft accelerate
    ```
 
-10. Install the ROUGE score package to run evaluation tasks
+10. Install the ROUGE score package to run **evaluation tasks**:
     ```sh
     pip install rouge-score
     ```
    
 11. Download the NLTK data (required by the ROUGE package):
-   ```sh
-   python -c "import nltk; nltk.download('punkt_tab')"
-   ```
+    ```sh
+    python -c "import nltk; nltk.download('punkt_tab')"
+    ```
 
 ## Usage
 
