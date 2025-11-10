@@ -13,7 +13,7 @@
 module load conda
 conda activate ft-llms
 
-SHARED_FS=/gpfs/scrubbed/jcols/projects/ft-llms
+SHARED_FS=$FT_LLMS_ROOTDIR
 ADAPTER_PATH="$SHARED_FS/checkpoints/llama3_2_3B_lora/epoch_0/"
 OUTPUT_PATH="$SHARED_FS/outputs/plos_validation"
 DATASET_PATH="$SHARED_FS/data/plos_validation.parquet"
@@ -22,5 +22,5 @@ srun python scripts/inference.py \
   --adapter-path "$ADAPTER_PATH" \
   --output-path "$OUTPUT_PATH" \
   --dataset-path "$DATASET_PATH" \
-  --batch-size 8 \
+  --batch-size 16 \
   --max-new-tokens 256

@@ -29,7 +29,7 @@ class LlamaSummarizer:
         batch_size: int = 1,
         input_field: str = "article",
         max_new_tokens: int = 256,
-        decoding: str = "greedy",
+        decoding: str = "dola",
         base_model: str = "meta-llama/Llama-3.2-3B-Instruct",
     ):
         self._summaries = []
@@ -130,7 +130,7 @@ class LlamaSummarizer:
     def _postprocess(self, outputs, input_length: int, batch_number: int):
         self._parse_outputs(
             self._tokenizer.batch_decode(
-                outputs[:, input_length:], skip_special_tokens=False
+                outputs[:, input_length:], skip_special_tokens=True
             )
         )
 

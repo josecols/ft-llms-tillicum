@@ -3,8 +3,8 @@
 #SBATCH --qos=normal
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:4
-#SBATCH --gpus-per-task=4
+#SBATCH --gres=gpu:8
+#SBATCH --gpus-per-task=8
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=128G
 #SBATCH --time=08:00:00
@@ -21,12 +21,12 @@ echo "Head node: $head_node  IP: $head_ip"
 export NCCL_DEBUG=INFO
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 
-SHARED_FS=/gpfs/scrubbed/jcols/projects/ft-llms
+SHARED_FS=$FT_LLMS_ROOTDIR
 CONFIG_PATH="$SHARED_FS/configs/llama3_2_3B_cuda.yaml"
 
 srun tune run \
   --nnodes $SLURM_NNODES \
-  --nproc_per_node 4 \
+  --nproc_per_node 8 \
   --rdzv_id $SLURM_JOB_ID \
   --rdzv_backend c10d \
   --rdzv_endpoint "$head_ip:29500" \

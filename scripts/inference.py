@@ -43,7 +43,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=32,
+        default=8,
     )
     parser.add_argument(
         "--max-new-tokens",

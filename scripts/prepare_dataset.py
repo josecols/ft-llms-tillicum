@@ -5,7 +5,7 @@ from pathlib import Path
 from datasets import load_dataset
 
 SEED = 1234
-SPLITS = ("train", "validation", "test")
+SPLITS = ("train", "validation")
 BASE_PATH = Path(__file__).resolve().parent
 
 

@@ -13,7 +13,7 @@
 module load conda
 conda activate ft-llms
 
-SHARED_FS=/gpfs/scrubbed/jcols/projects/ft-llms
+SHARED_FS=$FT_LLMS_ROOTDIR
 PREDICTIONS_PATH="$SHARED_FS/outputs/plos_validation.csv"
 DATASET_PATH="$SHARED_FS/data/plos_validation.parquet"
 
