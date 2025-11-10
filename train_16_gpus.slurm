@@ -21,7 +21,7 @@ echo "Head node: $head_node  IP: $head_ip"
 export NCCL_DEBUG=INFO
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 
-SHARED_FS=$FT_LLMS_ROOTDIR
+SHARED_FS="$FT_LLMS_ROOTDIR"
 CONFIG_PATH="$SHARED_FS/configs/llama3_2_3B_cuda.yaml"
 
 srun tune run \
