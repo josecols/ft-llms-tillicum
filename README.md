@@ -120,10 +120,10 @@ tune download meta-llama/Llama-3.2-3B-Instruct --output-dir models/Llama-3.2-3B-
 Run single-node fine-tuning on 8 GPUs:
 
 ```sh
-sbatch train_8_gpus.slurm
+sbatch tasks/train_8_gpus.slurm
 ```
 
-There is also a multi-node example script (`train_16_gpus.slurm`) that you can adapt for various distributed setups.
+There is also a multi-node example script (`tasks/train_16_gpus.slurm`) that you can adapt for various distributed setups.
 
 To check the job's progress, use the `squeue -u <netid>` command.
 
@@ -132,7 +132,7 @@ To check the job's progress, use the `squeue -u <netid>` command.
 Run the following command to generate the summaries with the fine-tuned model:
 
 ```sh
-sbatch inference.slurm
+sbatch tasks/inference.slurm
 ```
 
 ### Evaluation
@@ -140,7 +140,7 @@ sbatch inference.slurm
 Run the following command to evaluate the model summaries against the gold-standard:
 
 ```sh
-sbatch eval.slurm
+sbatch tasks/eval.slurm
 ```
 
 ## Additional Resources
