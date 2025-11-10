@@ -39,7 +39,7 @@ This project uses [TorchTune](https://pytorch.org/torchtune/) to demonstrate how
    
    Add the following line to your `~/.bashrc` file (replace the path with your actual project location):
    ```sh
-   export FT_LLMS_ROOTDIR=/gpfs/scrubbed/<netid>/projects/ft-llms
+   export FT_LLMS_ROOT=/gpfs/scrubbed/<netid>/projects/ft-llms
    ```
    
    Then reload your bash configuration:

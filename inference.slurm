@@ -13,7 +13,7 @@
 module load conda
 conda activate ft-llms
 
-SHARED_FS="$FT_LLMS_ROOTDIR"
+SHARED_FS="$FT_LLMS_ROOT"
 ADAPTER_PATH="$SHARED_FS/checkpoints/llama3_2_3B_lora/epoch_0/"
 OUTPUT_PATH="$SHARED_FS/outputs/plos_validation"
 DATASET_PATH="$SHARED_FS/data/plos_validation.parquet"
