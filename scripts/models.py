@@ -73,7 +73,9 @@ class LlamaSummarizer:
         return decoding_config.get(self._decoding, {})
 
     def _load_model(self):
-        self._tokenizer = AutoTokenizer.from_pretrained(self._model_id, use_fast=True)
+        self._tokenizer = AutoTokenizer.from_pretrained(
+            self._model_id, use_fast=True, padding_side="left"
+        )
         self._tokenizer.pad_token = self._tokenizer.eos_token
         self._model = AutoModelForCausalLM.from_pretrained(
             self._model_id,
@@ -83,7 +85,6 @@ class LlamaSummarizer:
 
         self._model.generation_config.max_new_tokens = self.max_new_tokens
         self._model.generation_config.pad_token_id = self._tokenizer.pad_token_id
-        self._model.tokenizer.padding_side = "left"
 
     def _read_checkpoint(self):
         if os.path.exists(self.output_path):
