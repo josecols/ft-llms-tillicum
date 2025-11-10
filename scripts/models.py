@@ -83,6 +83,7 @@ class LlamaSummarizer:
 
         self._model.generation_config.max_new_tokens = self.max_new_tokens
         self._model.generation_config.pad_token_id = self._tokenizer.pad_token_id
+        self._model.tokenizer.padding_side = "left"
 
     def _read_checkpoint(self):
         if os.path.exists(self.output_path):
