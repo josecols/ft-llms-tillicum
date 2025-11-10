@@ -72,7 +72,7 @@ This project uses [TorchTune](https://pytorch.org/torchtune/) to demonstrate how
    ```sh
    pip install wandb
    ```
-   > **Note:** You will need to [authenticate](https://docs.wandb.ai/models/quickstart#install-the-wandb-library-and-log-in) your WanDB account for the first time.
+   > **Note:** You will need to [authenticate](https://docs.wandb.ai/models/quickstart#install-the-wandb-library-and-log-in) your WanDB account for the first time. Additionally, modify the `metric_logger` section of the configuration file `configs/llama3_2_3B_cuda.yaml` with your WanDB project details.
 
 9. Install HuggingFace libraries to run **inference tasks**:
    ```sh
