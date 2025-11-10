@@ -47,7 +47,7 @@ class LlamaSummarizer:
         self.batch_size = batch_size
         self.output_path = f"{output_path}.csv"
         self.input_field = input_field
-        self.checkpoint_rate = 4  # save state every n batches.
+        self.checkpoint_rate = 1  # save state every n batches.
         self.max_new_tokens = max_new_tokens
 
         self.dataset = self._load_dataset(dataset_path)
@@ -148,7 +148,7 @@ class LlamaSummarizer:
             end_index = min(start_index + self.batch_size, len(self.dataset))
 
             input_length, inputs = self._preprocess(start_index, end_index)
-            outputs = self._model.generate(**inputs)
+            outputs = self._model.generate(**inputs, use_cache=True)
             self._postprocess(outputs, input_length, batch_number)
 
             start_index = end_index

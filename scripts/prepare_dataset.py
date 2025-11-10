@@ -62,9 +62,9 @@ def prepare_data_split(
     filename = f"plos_{split}"
     ds = load_dataset("BioLaySumm/BioLaySumm2025-PLOS", split=split).shuffle(seed=SEED)
 
-    # Limit the runtime during the workshop by using a maximum of 200 samples for inference:
+    # Limit the runtime during the workshop by using a maximum of 300 samples for inference:
     if split == "validation":
-        ds = ds.select(range(min(200, len(ds))))
+        ds = ds.select(range(min(300, len(ds))))
 
     ds_with_text = ds.map(
         lambda samples: extract_text(samples, use_abstracts=use_abstracts), batched=True
